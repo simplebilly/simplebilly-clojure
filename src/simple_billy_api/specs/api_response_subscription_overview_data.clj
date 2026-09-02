@@ -1,0 +1,31 @@
+(ns simple-billy-api.specs.api-response-subscription-overview-data
+  (:require [clojure.spec.alpha :as s]
+            [spec-tools.data-spec :as ds]
+            [simple-billy-api.specs.plan-features :refer :all]
+            [simple-billy-api.specs.plan-limits :refer :all]
+            [simple-billy-api.specs.usage-snapshot :refer :all]
+            )
+  (:import (java.io File)))
+
+
+(def api-response-subscription-overview-data-data
+  {
+   (ds/opt :currentPeriodEnd) inst?
+   (ds/req :features) plan-features-spec
+   (ds/req :isTrialing) boolean?
+   (ds/req :limits) plan-limits-spec
+   (ds/opt :manageUrl) string?
+   (ds/req :plan) string?
+   (ds/req :planName) string?
+   (ds/req :priceEur) float?
+   (ds/opt :quantity) int?
+   (ds/opt :status) string?
+   (ds/opt :subscriptionId) string?
+   (ds/opt :trialEndsAt) inst?
+   (ds/req :usage) usage-snapshot-spec
+   })
+
+(def api-response-subscription-overview-data-spec
+  (ds/spec
+    {:name ::api-response-subscription-overview-data
+     :spec api-response-subscription-overview-data-data}))
